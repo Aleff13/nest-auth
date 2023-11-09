@@ -2,7 +2,7 @@ name: nest-auth-unit
 
 on: [push]
 jobs:
-  setup:
+  unit:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
