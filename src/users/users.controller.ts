@@ -9,11 +9,13 @@ import {
   Render,
   Redirect,
   UseGuards,
+  UseFilters,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { IUsersList, UsersService } from './users.service';
 import { AuthenticatedGuard } from '../commom/guards/authenticated.guard';
+import { AuthExceptionFilter } from '../commom/filters/auth-exception.filter';
 
 @Controller('users')
 export class UsersController {
@@ -26,6 +28,7 @@ export class UsersController {
   }
 
   @Get('list')
+  @UseFilters(AuthExceptionFilter)
   @UseGuards(AuthenticatedGuard)
   @Render('users/list')
   async findAll(): Promise<IUsersList> {
