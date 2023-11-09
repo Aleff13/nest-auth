@@ -41,7 +41,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Docker
-        run: docker-compose up -d
+        run: docker-compose up --exit-code-from web
 
       - name: Install k6
         run: |
