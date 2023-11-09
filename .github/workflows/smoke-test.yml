@@ -55,3 +55,6 @@ jobs:
         run: |
           pnpm start
           ./k6 run test-performance/smoke/users/list.js
+
+      - name: Stop Docker Compose
+        run: docker-compose down
