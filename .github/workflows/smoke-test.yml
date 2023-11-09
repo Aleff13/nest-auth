@@ -3,7 +3,7 @@ name: nest-auth-unit
 on: [push]
 
 jobs:
-  k6_load_test:
+  smoke-test:
     name: k6 Load Test
     runs-on: ubuntu-latest
 
