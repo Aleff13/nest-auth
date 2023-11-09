@@ -14,7 +14,7 @@ async function bootstrap() {
     session({
       secret: 'nest-auth',
       resave: false,
-      saveUnunutalized: false,
+      saveUninitialized: false,
     }),
   );
 
