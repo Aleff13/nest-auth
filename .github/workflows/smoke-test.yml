@@ -41,7 +41,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Docker
-        run: docker-compose up --exit-code-from mysql
+        run: docker-compose up --exit-code-from mysql -d
 
       - name: Install k6
         run: |
