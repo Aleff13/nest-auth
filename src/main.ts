@@ -17,7 +17,8 @@ async function bootstrap() {
       saveUnunutalized: false,
     }),
   );
-  app.use(passport.initialized());
+
+  app.use(passport.initialize());
   app.use(passport.session());
 
   await app.listen(3000);
