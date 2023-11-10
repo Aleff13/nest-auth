@@ -16,6 +16,9 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { IUsersList, UsersService } from './users.service';
 import { AuthenticatedGuard } from '../commom/guards/authenticated.guard';
 import { AuthExceptionFilter } from '../commom/filters/auth-exception.filter';
+import { RolesGuard } from '../commom/guards/roles.guard';
+import { Roles } from '../commom/decorators/roles.decorator';
+import { RolesEnum } from './enum/role.enum';
 
 @Controller('users')
 export class UsersController {
@@ -29,7 +32,8 @@ export class UsersController {
 
   @Get('list')
   @UseFilters(AuthExceptionFilter)
-  @UseGuards(AuthenticatedGuard)
+  @UseGuards(RolesGuard)
+  @Roles(RolesEnum.ADMIN)
   @Render('users/list')
   async findAll(): Promise<IUsersList> {
     return {

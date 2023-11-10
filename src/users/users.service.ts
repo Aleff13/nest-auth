@@ -41,7 +41,7 @@ export class UsersService {
     const transformedUsers = users.map((user) => ({
       name: user.name,
       email: user.email,
-      role: Object.getOwnPropertyNames(UserRole)[user.role]?.toString(),
+      role: Object.entries(UserRole).find((item) => item[1] === user.role)[0],
     }));
 
     return transformedUsers;
