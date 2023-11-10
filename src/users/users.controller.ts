@@ -14,7 +14,6 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { IUsersList, UsersService } from './users.service';
-import { AuthenticatedGuard } from '../commom/guards/authenticated.guard';
 import { AuthExceptionFilter } from '../commom/filters/auth-exception.filter';
 import { RolesGuard } from '../commom/guards/roles.guard';
 import { Roles } from '../commom/decorators/roles.decorator';
