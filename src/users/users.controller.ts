@@ -8,10 +8,16 @@ import {
   Delete,
   Render,
   Redirect,
+  UseGuards,
+  UseFilters,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { IUsersList, UsersService } from './users.service';
+import { AuthExceptionFilter } from '../commom/filters/auth-exception.filter';
+import { RolesGuard } from '../commom/guards/roles.guard';
+import { Roles } from '../commom/decorators/roles.decorator';
+import { RolesEnum } from './enum/role.enum';
 
 @Controller('users')
 export class UsersController {
@@ -24,6 +30,9 @@ export class UsersController {
   }
 
   @Get('list')
+  @UseFilters(AuthExceptionFilter)
+  @UseGuards(RolesGuard)
+  @Roles(RolesEnum.ADMIN)
   @Render('users/list')
   async findAll(): Promise<IUsersList> {
     return {
@@ -32,7 +41,7 @@ export class UsersController {
   }
 
   @Post()
-  @Redirect('users')
+  @Redirect('users/list')
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }

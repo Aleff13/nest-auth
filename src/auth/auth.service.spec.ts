@@ -5,6 +5,7 @@ import { faker } from '@faker-js/faker';
 import { AuthService } from './auth.service';
 import { User } from '../users/entities/user.entity';
 import { UsersService } from '../users/users.service';
+import * as bcrypt from 'bcrypt';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -86,13 +87,17 @@ describe('AuthService', () => {
     expect(result).toBeNull();
   });
 
-  it.skip('should return user', async () => {
+  it('should return user', async () => {
     const testUser = new User();
+    const brutePassword = faker.internet.password();
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(brutePassword, salt);
+
     testUser.setUser(
       1,
       faker.internet.email(),
       faker.internet.userName(),
-      faker.internet.password(),
+      hashedPassword,
       faker.number.int({
         min: 1,
         max: 3,
@@ -101,10 +106,7 @@ describe('AuthService', () => {
 
     jest.spyOn(repo, 'findOneBy').mockResolvedValueOnce(testUser);
 
-    const result = await service.validateUser(
-      testUser.email,
-      testUser.password,
-    );
+    const result = await service.validateUser(testUser.email, brutePassword);
 
     expect(result.name).toEqual(testUser.name);
   });

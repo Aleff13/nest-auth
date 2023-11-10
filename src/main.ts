@@ -4,6 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import * as session from 'express-session';
 import * as passport from 'passport';
+import flash = require('connect-flash');
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -14,12 +15,13 @@ async function bootstrap() {
     session({
       secret: 'nest-auth',
       resave: false,
-      saveUnunutalized: false,
+      saveUninitialized: false,
     }),
   );
 
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(flash());
 
   await app.listen(3000);
 }
