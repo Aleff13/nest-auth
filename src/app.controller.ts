@@ -34,4 +34,10 @@ export class AppController {
   doLogin() {
     //
   }
+
+  @Get()
+  @Redirect('login')
+  doRedirect() {
+    //
+  }
 }
