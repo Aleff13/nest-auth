@@ -1,10 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRole } from './enum/role.enum';
+import { SearchServiceInterface } from '../search/interface/search.service.interface';
+import { CustomerSearchObject } from '../search/object/customer.search.object';
+import { SearchService } from '../search/search.service';
 
 export interface IUser {
   name: string;
@@ -21,6 +24,8 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @Inject('SearchServiceInterface')
+    private readonly searchService: SearchServiceInterface<any>,
   ) {}
   async create(createUserDto: CreateUserDto) {
     const user = this.userRepository.create(createUserDto);
@@ -38,6 +43,11 @@ export class UsersService {
     }));
 
     return transformedUsers;
+  }
+
+  public async search(q: any): Promise<any> {
+    const data = CustomerSearchObject.searchObject(q);
+    return await this.searchService.searchIndex(data);
   }
 
   findOne(id: number) {

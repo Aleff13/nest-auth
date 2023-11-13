@@ -10,6 +10,7 @@ import {
   Redirect,
   UseGuards,
   UseFilters,
+  Query,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -47,6 +48,11 @@ export class UsersController {
   @Redirect('users/list')
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
+  }
+
+  @Get('/search')
+  public async search(@Query() query: any): Promise<any> {
+    return await this.usersService.search(query.q);
   }
 
   @Get(':id')

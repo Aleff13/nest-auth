@@ -41,7 +41,7 @@ export class AppController {
   @Get('home')
   @UseFilters(AuthExceptionFilter)
   @UseGuards(RolesGuard)
-  @Roles(RolesEnum.CUSTOMER)
+  @Roles(RolesEnum.CUSTOMER, RolesEnum.ADMIN, RolesEnum.EMPLOYER)
   @Render('home')
   home(@GetUser() user: User) {
     return {
