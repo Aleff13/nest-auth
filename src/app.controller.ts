@@ -12,10 +12,21 @@ import { AppService } from './app.service';
 import { LoginGuard } from './commom/guards/login.guard';
 import { Request } from 'express';
 import { AuthExceptionFilter } from './commom/filters/auth-exception.filter';
+import { GetUser } from './commom/decorators/get-user.decorator';
+import { User } from './users/entities/user.entity';
+import { RolesGuard } from './commom/guards/roles.guard';
+import { Roles } from './commom/decorators/roles.decorator';
+import { RolesEnum, UserRole } from './users/enum/role.enum';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
+
+  @Get()
+  @Redirect('login')
+  doRedirect() {
+    //
+  }
 
   @Get('login')
   @Render('login')
@@ -27,17 +38,23 @@ export class AppController {
     };
   }
 
+  @Get('home')
+  @UseFilters(AuthExceptionFilter)
+  @UseGuards(RolesGuard)
+  @Roles(RolesEnum.CUSTOMER)
+  @Render('home')
+  home(@GetUser() user: User) {
+    return {
+      name: user.name,
+      email: user.email,
+    };
+  }
+
   @Post('login')
   @UseFilters(AuthExceptionFilter)
   @UseGuards(LoginGuard)
-  @Redirect('users/list')
+  @Redirect('/home')
   doLogin() {
-    //
-  }
-
-  @Get()
-  @Redirect('login')
-  doRedirect() {
     //
   }
 }

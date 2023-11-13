@@ -32,7 +32,7 @@ export class UsersController {
   @Get('list')
   @UseFilters(AuthExceptionFilter)
   @UseGuards(RolesGuard)
-  @Roles(RolesEnum.ADMIN)
+  @Roles(RolesEnum.ADMIN, RolesEnum.EMPLOYER)
   @Render('users/list')
   async findAll(): Promise<IUsersList> {
     return {
@@ -41,6 +41,9 @@ export class UsersController {
   }
 
   @Post()
+  @UseFilters(AuthExceptionFilter)
+  @UseGuards(RolesGuard)
+  @Roles(RolesEnum.ADMIN, RolesEnum.EMPLOYER)
   @Redirect('users/list')
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
