@@ -17,14 +17,6 @@ export class SearchService
   public async insertIndex(bulkData: any): Promise<any> {
     const result = await this.bulk(bulkData);
 
-    // if (result.statusCode) {
-    //   console.error('fail on insertIndex', bulkData);
-    //   throw new HttpException(
-    //     result.errors.valueOf,
-    //     HttpStatus.INTERNAL_SERVER_ERROR,
-    //   );
-    // }
-
     return result;
   }
   public async updateIndex(updateData: any): Promise<any> {
@@ -38,16 +30,6 @@ export class SearchService
   public async searchIndex(searchData: any): Promise<any> {
     try {
       const result = await this.search(searchData);
-      //   const result = await this.search({
-      //     index: 'customer',
-      //     body: {
-      //       query: {
-      //         match: {
-      //           name: 'teste',
-      //         },
-      //       },
-      //     },
-      //   });
 
       return result.body.hits.hits;
     } catch (err) {

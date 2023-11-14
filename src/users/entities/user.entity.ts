@@ -1,5 +1,6 @@
 import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { RolesEnum } from '../enum/role.enum';
 
 @Entity()
 export class User {
@@ -22,6 +23,10 @@ export class User {
   async setPassword() {
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
+  }
+
+  get isCustomer() {
+    return this.role === RolesEnum.CUSTOMER;
   }
 
   async setUser(
