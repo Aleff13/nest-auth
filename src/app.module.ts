@@ -5,9 +5,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { ObserverModule } from './commom/observers/observer.module';
+import { SearchModule } from './search/search.module';
+import { ElasticsearchModule } from '@nestjs/elasticsearch';
 
 @Module({
   imports: [
+    ElasticsearchModule.register({
+      node: 'http://elasticsearch:9200/',
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -17,9 +23,12 @@ import { AuthModule } from './auth/auth.module';
       password: '123456',
       entities: [join(__dirname, '**/*entity.{ts,js}')],
       synchronize: true,
+      subscribers: ['dist/observers/subscribers/*.subscriber.js'],
     }),
     UsersModule,
     AuthModule,
+    SearchModule,
+    ObserverModule,
   ],
   controllers: [AppController],
   providers: [AppService],
