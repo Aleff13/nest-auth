@@ -9,8 +9,8 @@ export abstract class BaseSearchObject {
   public static extractKeyValue(query: Record<string, string>) {
     const keyValue = Object.entries(query);
 
-    const key = keyValue[0][0];
-    const value = keyValue[0][1];
+    const key = keyValue?.[0]?.[0];
+    const value = keyValue?.[0]?.[1];
 
     return { key, value };
   }
