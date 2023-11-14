@@ -52,7 +52,7 @@ export class UsersController {
 
   @Get('/search')
   public async search(@Query() query: any): Promise<any> {
-    return await this.usersService.search(query.q);
+    return await this.usersService.search(query);
   }
 
   @Get(':id')
