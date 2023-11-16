@@ -20,16 +20,27 @@ class CreatePage extends BasePage {
     customer: '3',
   };
 
-  async fillUsername(username = faker.internet.userName()): Promise<void> {
+  async fillUsername(username = faker.internet.userName()): Promise<string> {
     await this.form.username.fill(username);
+    return username;
   }
 
-  async fillEmail(email = faker.internet.email()): Promise<void> {
+  async fillEmail(email = faker.internet.email()): Promise<string> {
     await this.form.email.fill(email);
+    return email;
   }
 
   async fillPassword(password = faker.internet.password()): Promise<void> {
     await this.form.password.fill(password);
+  }
+
+  async selectRole(
+    role = faker.number.int({
+      min: 1,
+      max: 3,
+    }),
+  ): Promise<void> {
+    await this.form.role.selectOption(role.toString());
   }
 
   async clickSubmit(): Promise<void> {
