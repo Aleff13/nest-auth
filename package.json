@@ -17,7 +17,9 @@
     "test:watch": "jest --watch --detectOpenHandles",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "test:ui-e2e": "npx playwright test test-e2e/tests/e2e/",
+    "test:ui-e2e:setup": "npx playwright test test-e2e/tests/setup/"
   },
   "dependencies": {
     "@elastic/elasticsearch": "^7.9.0",
@@ -29,12 +31,14 @@
     "@nestjs/passport": "^10.0.2",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "^10.0.0",
+    "@playwright/test": "^1.39.0",
     "@types/bcrypt": "^5.0.1",
     "@types/connect-flash": "^0.0.40",
     "@types/express-session": "^1.17.10",
     "bcrypt": "^5.1.1",
     "bootstrap": "5.3.2",
     "connect-flash": "^0.1.1",
+    "dotenv": "^16.3.1",
     "elasticsearch": "^16.7.1",
     "express-session": "^1.17.3",
     "hbs": "^4.2.0",

@@ -31,7 +31,7 @@ export class UsersController {
   @Get('create')
   @UseFilters(AuthExceptionFilter)
   @UseGuards(RolesGuard)
-  @Roles(RolesEnum.ADMIN, RolesEnum.EMPLOYER)
+  @Roles(RolesEnum.ADMIN)
   @Render('users/create')
   createUser() {
     //
