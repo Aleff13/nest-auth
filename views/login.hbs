@@ -118,17 +118,18 @@
 
       <div class="form-floating">
         <input type="email" class="form-control {{class}}" id="floatingInput" value="{{username}}"
-          placeholder="nome@exampl.com" name="username">
+          placeholder="nome@exampl.com" name="username" data-testid="username">
         <label for="floatingInput">Email</label>
       </div>
       <div class="form-floating">
-        <input type="password" class="form-control {{class}}" id="floatingPassword" placeholder="Senha" name="password">
+        <input type="password" class="form-control {{class}}" id="floatingPassword" placeholder="Senha" name="password"
+          data-testid="password">
         <label for="floatingPassword">Senha</label>
       </div>
       <div class="col-12">
         <div class="text-center text-danger">{{message}}</div>
       </div>
-      <button class="btn btn-primary w-100 py-2" type="submit">Entrar</button>
+      <button class="btn btn-primary w-100 py-2" type="submit" data-testid="submit">Entrar</button>
       <div class="form-check text-start my-3">
         <a href="/password-reset">Esqueci a senha</a>
       </div>

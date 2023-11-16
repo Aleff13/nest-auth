@@ -31,7 +31,8 @@
                 </ul>
                 <div class="d-flex" style="justify-content: flex-end; width: 80%">
                     <a class="btn btn-danger" href="#"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit()">Sair
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit()"
+                        data-testid='logout'>Sair
                     </a>
                     <form id="logout-form" action="/logout" method="POST" style="display: none;"></form>
                 </div>
