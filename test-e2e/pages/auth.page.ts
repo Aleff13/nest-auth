@@ -5,7 +5,8 @@ export class AuthenticationPage extends BasePage {
   protected usernameInput = this.page.getByTestId('username');
   protected passwordInput = this.page.getByTestId('password');
   protected submitBtn = this.page.getByTestId('submit');
-  public url = '/';
+  protected title = '/Login';
+  protected url = '/login';
 
   async login(userType: UserRole, saveSession = true) {
     const { username, password, path } = this.getCredentials(userType);

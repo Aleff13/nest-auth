@@ -11,6 +11,7 @@ interface IBasePage {
 abstract class BasePage implements IBasePage {
   public page: Page;
   protected abstract url: string;
+  protected abstract title: string;
 
   //inject common components here
   constructor(page: Page) {
@@ -23,6 +24,10 @@ abstract class BasePage implements IBasePage {
 
   public async assertUrl(url: RegExp): Promise<void> {
     await expect(this.page).toHaveURL(url);
+  }
+
+  public async assertTitle(title: string): Promise<void> {
+    await expect(this.page).toHaveTitle(title);
   }
 }
 
