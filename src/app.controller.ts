@@ -28,6 +28,12 @@ export class AppController {
     //
   }
 
+  @Get('password-reset')
+  @Render('password-reset')
+  doPasswordReset() {
+    //
+  }
+
   @Get('login')
   @Render('login')
   getIndexLogin(@Req() req: Request) {
