@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { ObserverModule } from './commom/observers/observer.module';
 import { SearchModule } from './search/search.module';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
+import { PasswordResetModule } from './password-reset/password-reset.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { ElasticsearchModule } from '@nestjs/elasticsearch';
     AuthModule,
     SearchModule,
     ObserverModule,
+    PasswordResetModule,
   ],
   controllers: [AppController],
   providers: [AppService],
