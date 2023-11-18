@@ -4,6 +4,7 @@ import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SearchServiceInterface } from '../search/interface/search.service.interface';
 import { CustomerSearchObject } from '../search/object/customer.search.object';
+import { ICustomerSearchObjectResult } from './interfaces/customer.object.search';
 
 export interface IUser {
   name: string;
@@ -23,7 +24,9 @@ export class UsersSearchService {
     @Inject('SearchServiceInterface')
     private readonly searchService: SearchServiceInterface<any>,
   ) {}
-  public async search(q: any): Promise<any> {
+  public async search(
+    q: Record<string, string>,
+  ): Promise<ICustomerSearchObjectResult[]> {
     const data = CustomerSearchObject.searchObject(q);
     return await this.searchService.searchIndex(data);
   }

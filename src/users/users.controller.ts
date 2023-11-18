@@ -20,12 +20,14 @@ import { RolesGuard } from '../commom/guards/roles.guard';
 import { Roles } from '../commom/decorators/roles.decorator';
 import { RolesEnum } from './enum/role.enum';
 import { UsersSearchService } from './users.search.service';
+import { UsersSearchTransformer } from './users.search.transformer';
 
 @Controller('users')
 export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly usersSearchService: UsersSearchService,
+    private readonly usersSearchTransformer: UsersSearchTransformer,
   ) {}
 
   @Get('create')
@@ -61,8 +63,20 @@ export class UsersController {
   @UseGuards(RolesGuard)
   @Roles(RolesEnum.ADMIN, RolesEnum.EMPLOYER)
   @Get('/search')
-  public async search(@Query() query: any): Promise<any> {
-    return await this.usersSearchService.search(query);
+  @Render('users/search')
+  public async search(
+    @Query('parameter') parameter: string,
+    @Query('value') value: string,
+  ): Promise<any> {
+    if (!parameter || !value) return;
+    const query = { [parameter]: value };
+
+    const result = await this.usersSearchService.search(query);
+    const users = await this.usersSearchTransformer.elasticResultToUser(result);
+
+    return {
+      users,
+    };
   }
 
   @Get(':id')
