@@ -1,6 +1,6 @@
 import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { RolesEnum } from '../enum/role.enum';
+import { RolesEnum, UserRole } from '../enum/role.enum';
 
 @Entity()
 export class User {
@@ -27,6 +27,14 @@ export class User {
 
   get isCustomer() {
     return this.role === RolesEnum.CUSTOMER;
+  }
+
+  get transformedUser() {
+    return {
+      name: this.name,
+      email: this.email,
+      role: Object.entries(UserRole).find((item) => item[1] === this.role)[0],
+    };
   }
 
   async setUser(
