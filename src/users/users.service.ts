@@ -40,6 +40,10 @@ export class UsersService {
     return transformedUsers;
   }
 
+  async updateUser(user: User) {
+    return await this.userRepository.update(user.id, user);
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} user`;
   }

@@ -20,9 +20,9 @@ export class User {
   role: number;
 
   @BeforeInsert() //permite que um método seja executado antes de salvar no banco
-  async setPassword() {
+  async setPassword(password?: string) {
     const salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(this.password, salt);
+    this.password = await bcrypt.hash(password || this.password, salt);
   }
 
   get isCustomer() {

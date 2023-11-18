@@ -9,9 +9,14 @@ import { ObserverModule } from './commom/observers/observer.module';
 import { SearchModule } from './search/search.module';
 import { ElasticsearchModule } from '@nestjs/elasticsearch';
 import { PasswordResetModule } from './password-reset/password-reset.module';
+import { MailModule } from './commom/mail/mail.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     ElasticsearchModule.register({
       node: 'http://elasticsearch:9200/',
     }),
@@ -31,6 +36,7 @@ import { PasswordResetModule } from './password-reset/password-reset.module';
     SearchModule,
     ObserverModule,
     PasswordResetModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -6,18 +6,27 @@ import {
   Patch,
   Param,
   Delete,
+  Redirect,
 } from '@nestjs/common';
 import { PasswordResetService } from './password-reset.service';
 import { CreatePasswordResetDto } from './dto/create-password-reset.dto';
 import { UpdatePasswordResetDto } from './dto/update-password-reset.dto';
+import { PasswordResetDto } from './dto/password-reset.dto';
 
 @Controller('password-reset')
 export class PasswordResetController {
   constructor(private readonly passwordResetService: PasswordResetService) {}
 
   @Post()
+  @Redirect('/login')
   create(@Body() createPasswordResetDto: CreatePasswordResetDto) {
     return this.passwordResetService.create(createPasswordResetDto);
+  }
+
+  @Post('confirm')
+  @Redirect('/login')
+  async resetPassword(@Body() passwordResetDto: PasswordResetDto) {
+    await this.passwordResetService.resetPassword(passwordResetDto);
   }
 
   @Get()

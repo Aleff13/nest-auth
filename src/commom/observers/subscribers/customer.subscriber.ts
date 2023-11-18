@@ -26,8 +26,9 @@ export class PostSubscriber implements EntitySubscriberInterface<User> {
     return await this.customerEsIndex.insertCustomerDocument(event.entity);
   }
 
-  public async afterUpdate(event: UpdateEvent<User>): Promise<any> {
-    const user = event.entity as User;
-    return await this.customerEsIndex.updateCustomerDocument(user);
-  }
+  //todo: fix this code
+  // public async afterUpdate(event: UpdateEvent<User>): Promise<any> {
+  //   const user = event.entity as User;
+  //   return await this.customerEsIndex.updateCustomerDocument(user);
+  // }
 }
