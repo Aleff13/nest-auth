@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Query,
   Redirect,
   Render,
   Req,
@@ -26,6 +27,20 @@ export class AppController {
   @Redirect('login')
   doRedirect() {
     //
+  }
+
+  @Get('password-reset')
+  @Render('password-reset')
+  doPasswordReset() {
+    //
+  }
+
+  @Get('confirm')
+  @Render('confirm-password')
+  async doRecoverPassword(@Req() req: Request, @Query('token') token: string) {
+    return {
+      token,
+    };
   }
 
   @Get('login')
