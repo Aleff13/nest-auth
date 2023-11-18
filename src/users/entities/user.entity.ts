@@ -1,5 +1,6 @@
 import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { RolesEnum } from '../enum/role.enum';
 
 @Entity()
 export class User {
@@ -19,9 +20,13 @@ export class User {
   role: number;
 
   @BeforeInsert() //permite que um método seja executado antes de salvar no banco
-  async setPassword() {
+  async setPassword(password?: string) {
     const salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(this.password, salt);
+    this.password = await bcrypt.hash(password || this.password, salt);
+  }
+
+  get isCustomer() {
+    return this.role === RolesEnum.CUSTOMER;
   }
 
   async setUser(

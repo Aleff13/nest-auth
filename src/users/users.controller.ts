@@ -10,6 +10,7 @@ import {
   Redirect,
   UseGuards,
   UseFilters,
+  Query,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -18,12 +19,19 @@ import { AuthExceptionFilter } from '../commom/filters/auth-exception.filter';
 import { RolesGuard } from '../commom/guards/roles.guard';
 import { Roles } from '../commom/decorators/roles.decorator';
 import { RolesEnum } from './enum/role.enum';
+import { UsersSearchService } from './users.search.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly usersSearchService: UsersSearchService,
+  ) {}
 
   @Get('create')
+  @UseFilters(AuthExceptionFilter)
+  @UseGuards(RolesGuard)
+  @Roles(RolesEnum.ADMIN)
   @Render('users/create')
   createUser() {
     //
@@ -32,7 +40,7 @@ export class UsersController {
   @Get('list')
   @UseFilters(AuthExceptionFilter)
   @UseGuards(RolesGuard)
-  @Roles(RolesEnum.ADMIN)
+  @Roles(RolesEnum.ADMIN, RolesEnum.EMPLOYER)
   @Render('users/list')
   async findAll(): Promise<IUsersList> {
     return {
@@ -41,9 +49,20 @@ export class UsersController {
   }
 
   @Post()
+  @UseFilters(AuthExceptionFilter)
+  @UseGuards(RolesGuard)
+  @Roles(RolesEnum.ADMIN, RolesEnum.EMPLOYER)
   @Redirect('users/list')
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
+  }
+
+  @UseFilters(AuthExceptionFilter)
+  @UseGuards(RolesGuard)
+  @Roles(RolesEnum.ADMIN, RolesEnum.EMPLOYER)
+  @Get('/search')
+  public async search(@Query() query: any): Promise<any> {
+    return await this.usersSearchService.search(query);
   }
 
   @Get(':id')

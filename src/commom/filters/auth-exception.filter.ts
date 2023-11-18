@@ -24,7 +24,7 @@ export class AuthExceptionFilter implements ExceptionFilter {
     const isNotFoundException = exception instanceof NotFoundException;
 
     if (isAuthException) {
-      request.flash('loginError', 'Usuário/ senha inválidos');
+      request.flash('loginError', 'Usuário/senha inválidos');
       request.flash('username', request.body.username);
       request.flash('class', 'is-invalid');
       response.redirect('/login');

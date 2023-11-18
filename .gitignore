@@ -35,3 +35,9 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+.env
+/tests-e2e/sessions/*.json

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository } from 'typeorm';
@@ -23,14 +23,7 @@ export class UsersService {
     private userRepository: Repository<User>,
   ) {}
   async create(createUserDto: CreateUserDto) {
-    const user = new User();
-    user.setUser(
-      1,
-      createUserDto.email,
-      createUserDto.name,
-      createUserDto.password,
-      createUserDto.role,
-    );
+    const user = this.userRepository.create(createUserDto);
 
     return await this.userRepository.save(user);
   }
@@ -45,6 +38,10 @@ export class UsersService {
     }));
 
     return transformedUsers;
+  }
+
+  async updateUser(user: User) {
+    return await this.userRepository.update(user.id, user);
   }
 
   findOne(id: number) {
